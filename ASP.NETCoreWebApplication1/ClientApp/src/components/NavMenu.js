@@ -3,6 +3,7 @@ import { Collapse, Navbar, NavbarBrand, NavbarToggler, NavItem, NavLink } from '
 import { Link } from 'react-router-dom';
 import './NavMenu.css';
 import { AuthContext } from "./AuthProvider";
+import {SignOut} from "./SignOut";
 
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
@@ -43,7 +44,7 @@ export class NavMenu extends Component {
                           {isLoggedIn ? (
                               <React.Fragment>
                                 <NavItem>
-                                  <NavLink tag={Link} className="text-dark" to="/SignOut">Sign Out</NavLink>
+                                  <SignOut></SignOut>
                                 </NavItem>
                               </React.Fragment>
                           ) : (

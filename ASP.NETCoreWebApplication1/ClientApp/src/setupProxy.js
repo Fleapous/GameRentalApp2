@@ -6,7 +6,10 @@
   
   const context = [
     "/game",
-    "/auth"
+    "/auth",
+    "/register",
+    "/login",
+    "/logout",
   ];
   
   const onError = (err, req, resp, target) => {
