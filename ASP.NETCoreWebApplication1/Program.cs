@@ -39,17 +39,17 @@ if (!app.Environment.IsDevelopment())
 
 app.MapIdentityApi<IdentityUser>();
 
-app.MapPost("/logout", async (SignInManager<IdentityUser> SignInManager) =>
+app.MapPost("/logout", async (SignInManager<IdentityUser> signInManager) =>
 {
-    await SignInManager.SignOutAsync();
+    await signInManager.SignOutAsync();
     return Results.Ok();
 }).RequireAuthorization();
 
-app.MapPost("/pingauth", (ClaimsPrincipal user) =>
-{
-    var email = user.FindFirstValue(ClaimTypes.Email);
-    return Results.Json(new { Email = email });
-}).RequireAuthorization();
+// app.MapPost("/pingauth", (ClaimsPrincipal user) =>
+// {
+//     var email = user.FindFirstValue(ClaimTypes.Email);
+//     return Results.Json(new { Email = email });
+// }).RequireAuthorization();
 
 app.UseHttpsRedirection();
 app.UseDefaultFiles();

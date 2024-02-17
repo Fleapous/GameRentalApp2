@@ -1,6 +1,8 @@
 import { Home } from "./components/Home";
 import {AboutMe} from "./components/AboutMe"
 import {Login} from "./components/Login";
+import {Register} from "./components/Register";
+import {SignOut} from "./components/SignOut";
 
 const AppRoutes = [
   {
@@ -14,6 +16,14 @@ const AppRoutes = [
   {
     path: 'Login',
     element: <Login />
+  },
+  {
+    path: 'Register',
+    element: <Register />
+  },
+  {
+    path: 'SignOut',
+    element: <SignOut />
   }
 ];
 
