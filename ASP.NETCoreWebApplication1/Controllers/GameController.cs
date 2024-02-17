@@ -1,5 +1,6 @@
 using ASP.NETCoreWebApplication1.Data;
 using ASP.NETCoreWebApplication1.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;

@@ -1,5 +1,6 @@
 import { Home } from "./components/Home";
 import {AboutMe} from "./components/AboutMe"
+import {Login} from "./components/Login";
 
 const AppRoutes = [
   {
@@ -9,6 +10,10 @@ const AppRoutes = [
   {
     path: 'AboutMe',
     element: <AboutMe />
+  },
+  {
+    path: 'Login',
+    element: <Login />
   }
 ];
 
