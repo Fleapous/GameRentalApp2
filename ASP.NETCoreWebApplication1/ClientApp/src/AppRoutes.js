@@ -3,6 +3,7 @@ import {AboutMe} from "./components/AboutMe"
 import {Login} from "./components/Login";
 import {Register} from "./components/Register";
 import {SignOut} from "./components/SignOut";
+import {Admin} from "./components/Admin";
 
 const AppRoutes = [
   {
@@ -24,6 +25,10 @@ const AppRoutes = [
   {
     path: 'SignOut',
     element: <SignOut />
+  },
+  {
+    path: 'Admin',
+    element: <Admin/>
   }
 ];
 

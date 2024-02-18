@@ -8,7 +8,7 @@ export const Login = () => {
     const handleSubmit = async (event) => {
         event.preventDefault();
         try {
-            const response = await fetch('/login?useCookies=true', {
+            const response = await fetch(`/login?useCookies=true&useSessionCookies=true`, {
                 method: 'POST',
                 headers: {
                     "Content-Type": "application/json",
@@ -20,17 +20,14 @@ export const Login = () => {
             });
             
             if (!response.ok) {
-                const responseData = await response.json();
-                console.log('Login has warnings/error:', responseData);
+                console.log('Login has warnings/error:');
             }
-
-            const responseData = await response.json();
-            console.log('Login successful:', responseData);
-            window.location.href = '/'
+            
+            console.log('Login successful:');
+            window.location.href = '/' // reload the page in order to check for auth
 
         } catch (error) {
             console.error('Login failed:', error.message);
-            window.location.href = '/' //error with json but couldnt find why so tmp work around :>
         }
     }
 

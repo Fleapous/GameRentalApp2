@@ -27,7 +27,9 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connection));
 
 builder.Services.AddIdentityApiEndpoints<IdentityUser>()
+    .AddRoles<IdentityRole>()
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -64,11 +66,6 @@ app.MapPost("/logout", async (SignInManager<IdentityUser> signInManager) =>
     return Results.Ok();
 }).RequireAuthorization();
 
-// app.MapPost("/pingauth", (ClaimsPrincipal user) =>
-// {
-//     var email = user.FindFirstValue(ClaimTypes.Email);
-//     return Results.Json(new { Email = email });
-// }).RequireAuthorization();
 
 app.UseHttpsRedirection();
 app.UseDefaultFiles();
@@ -82,5 +79,41 @@ app.MapControllerRoute(
     pattern: "{controller}/{action=Index}/{id?}");
 
 app.MapFallbackToFile("index.html");
+
+//temporary role creation and assignment  
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    var roles = new[] { "Admin", "Member" };
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+        {
+            await roleManager.CreateAsync(new IdentityRole(role));
+        }
+    }
+}
+
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<IdentityUser>>();
+    const string email = "Admin@Admin.com";
+    const string password = "Adimn123";
+
+    if (await userManager.FindByEmailAsync(email) == null)
+    {
+        var newUser = new IdentityUser
+        {
+            Email = email,
+            UserName = email
+            
+        };
+
+        await userManager.CreateAsync(newUser, password);
+        await userManager.AddToRoleAsync(newUser, "Admin");
+    }
+}
+
 
 app.Run();

@@ -5,6 +5,8 @@ import './NavMenu.css';
 import { AuthContext } from "./AuthProvider";
 import {SignOut} from "./SignOut";
 
+
+
 export class NavMenu extends Component {
   static displayName = NavMenu.name;
 
@@ -26,7 +28,7 @@ export class NavMenu extends Component {
   render() {
       return (
           <AuthContext.Consumer>
-            {({ isLoggedIn }) => (
+            {({ isLoggedIn, roles }) => (
                 <div>
                   {isLoggedIn ? <p>User is signed in.</p> : <p>User is not signed in.</p>}
                   <header>
@@ -42,11 +44,22 @@ export class NavMenu extends Component {
                             <NavLink tag={Link} className="text-dark" to="/AboutMe">About ME</NavLink>
                           </NavItem>
                           {isLoggedIn ? (
-                              <React.Fragment>
-                                <NavItem>
-                                  <SignOut></SignOut>
-                                </NavItem>
-                              </React.Fragment>
+                              roles.includes("Admin") ? (
+                                  <React.Fragment>
+                                    <NavItem>
+                                      <NavLink tag={Link} className="text-dark" to="/Admin">Admin Area</NavLink>
+                                    </NavItem>
+                                    <NavItem>
+                                      <SignOut></SignOut>
+                                    </NavItem>
+                                  </React.Fragment>
+                              ) : (
+                                  <React.Fragment>
+                                    <NavItem>
+                                      <SignOut></SignOut>
+                                    </NavItem>
+                                  </React.Fragment>
+                              )
                           ) : (
                               <React.Fragment>
                                 <NavItem>
