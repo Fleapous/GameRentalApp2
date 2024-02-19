@@ -1,5 +1,7 @@
 using System.Security.Claims;
 using ASP.NETCoreWebApplication1.Data;
+using ASP.NETCoreWebApplication1.Repository;
+using ASP.NETCoreWebApplication1.Repository.IRepository;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
@@ -49,6 +51,8 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireNonAlphanumeric = false;
     options.Password.RequiredUniqueChars = 0;
 });
+
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 var app = builder.Build();
 // Configure the HTTP request pipeline.
