@@ -1,58 +1,47 @@
 import React, { Component } from 'react';
 import BackGround from "../../components/BackGround";
 import FloatingBox from "../../components/FloatingBox";
+import DataFetcher from "../../components/DataFetcher";
 
 export class Home extends Component {
-  static displayName = Home.name;
+    static displayName = Home.name;
 
-  constructor(props) {
-      super(props);
-      this.state = {games: [], loading: true}
-  }
-  
-  componentDidMount() {
-      this.populateGames();
-  }
-  
-  async populateGames() {
-      const response = await fetch("game");
-      const data = await response.json();
-      console.log(data);
-      this.setState({games: data, loading: false});
-  }
-  
-  renderGames(gamesProps){
-      return (
-          <div>
-            {gamesProps.map(game =>
-                <BackGround imgUrl={require(`../../Assets/Images/${game.backGroundImg}`)}>
-                    <FloatingBox
-                        width={200}
-                        height={200}
-                        borderRad={20}
-                        color={"White"}
-                        padding={20}
-                        position={{ top: '200px', left: '300px' }}
-                        rotation={30}
-                        positioning={"absolute"}
+    renderGames = ({ data, loading, error }) => {
+        if (loading) {
+            return <div>Loading...</div>;
+        }
+
+        if (error) {
+            return <div>Error: {error.message}</div>;
+        }
+
+        return (
+            <div>
+                {data.map(game => (
+                    <BackGround key={game.id} imgUrl={require(`../../Assets/Images/${game.backGroundImg}`)}>
+                        <FloatingBox
+                            width={200}
+                            height={200}
+                            borderRad={20}
+                            color={"White"}
+                            padding={20}
+                            position={{ top: '200px', left: '300px' }}
+                            rotation={30}
+                            positioning={"absolute"}
                         >
-                        <h2>{game.name}</h2>
-                    </FloatingBox>
-                </BackGround>
-            )}
-          </div>
-      );
-      
-  }
-  
+                            <h2>{game.name}</h2>
+                        </FloatingBox>
+                    </BackGround>
+                ))}
+            </div>
+        );
+    };
 
     render() {
-      let games = this.renderGames(this.state.games);
-      return (
-          <div>
-              {games}
-          </div>
-      );
-  }
+        return (
+            <div>
+                <DataFetcher url="game" render={this.renderGames} />
+            </div>
+        );
+    }
 }
-

@@ -26,10 +26,10 @@ public class GameController : Controller
     
     // GET
     [HttpGet]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(IEnumerable<GameModel>))]
     public IEnumerable<GameModel> GetGames()
     {
         _logger.LogInformation("GetGames action triggered.");
-        //IEnumerable<GameModel> games = _db.Set<GameModel>().ToList();
         IEnumerable<GameModel> games = _unitOf.GameModel.GetAll();
         return games;
     }
